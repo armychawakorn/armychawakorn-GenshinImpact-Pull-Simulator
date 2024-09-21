@@ -7,7 +7,7 @@ interface Character {
   rarity: number;
 }
 
-const rateUp = 'Nahida';
+const rateUpCharacter = 'Nahida';
 
 const characters = [
   { name: "Albedo", rarity: 5 },
@@ -110,7 +110,7 @@ export default function Home() {
       const rateUp = Math.random() * 100;
       if (rateUp >= 55) {
         console.log(rateUp);
-        character = fiveStars.find(c => c.name === 'Nahida') || fiveStars[Math.floor(Math.random() * fiveStars.length)];
+        character = fiveStars.find(c => c.name === rateUpCharacter) || fiveStars[Math.floor(Math.random() * fiveStars.length)];
       } else {
         character = fiveStars[Math.floor(Math.random() * fiveStars.length)];
       }
