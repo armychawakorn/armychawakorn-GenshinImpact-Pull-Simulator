@@ -7,6 +7,8 @@ interface Character {
   rarity: number;
 }
 
+const rateUp = 'Nahida';
+
 const characters = [
   { name: "Albedo", rarity: 5 },
   { name: "Alhaitham", rarity: 5 },
@@ -88,7 +90,6 @@ const fiveStars = characters.filter(c => c.rarity === 5);
 const fourStars = characters.filter(c => c.rarity === 4);
 
 function SortPulls(pulls: Character[]): Character[] {
-  //เรียงจาก4ดาวไป5ดาว
   return pulls.sort((a, b) => a.rarity - b.rarity);
 }
 
@@ -104,9 +105,15 @@ export default function Home() {
       return character;
     }
     const rand = Math.random() * 100;
-    if (rand <= 0.6 || currentPity === 88) { // Increased chance at 89 pity
-      const character = fiveStars[Math.floor(Math.random() * fiveStars.length)];
-      console.log(`Getting 5 star: ${character.name}`);
+    if (rand <= 0.6 || currentPity === 88) {
+      let character = {} as Character;
+      const rateUp = Math.random() * 100;
+      if (rateUp >= 55) {
+        console.log(rateUp);
+        character = fiveStars.find(c => c.name === 'Nahida') || fiveStars[Math.floor(Math.random() * fiveStars.length)];
+      } else {
+        character = fiveStars[Math.floor(Math.random() * fiveStars.length)];
+      }
       return character;
     } else {
       const character = fourStars[Math.floor(Math.random() * fourStars.length)];
@@ -153,11 +160,18 @@ export default function Home() {
                 alt="Genshin Impact Banner"
                 fill
                 className="object-cover"
+                sizes='512'
+                priority
               />
-              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4">
-                <p className="text-center text-white font-bold text-lg">
-                  Featured Banner
-                </p>
+              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 p-4">
+                <div className="text-center text-white font-bold text-lg">
+                  <div>
+                    <span className='text-2xl font-bold text-green-500'>Nahida</span> <span className='text-2xl font-bold text-yellow-400'>★★★★★</span>
+                  </div>
+                  <div>
+                    Rate Up Banner
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -192,6 +206,7 @@ export default function Home() {
                       alt={character.name}
                       fill
                       className="object-cover rounded-full"
+                      sizes='128'
                     />
                   </div>
                   <div className="flex flex-col items-center">
@@ -230,6 +245,7 @@ export default function Home() {
                               alt={char.name}
                               fill
                               className="object-cover rounded-full"
+                              sizes='128'
                             />
                           </div>
                           <div className="flex flex-col items-center">
